@@ -2,6 +2,8 @@
 
 ## Usage
 
+### Displaying Data
+
 The first step to creating an extended table view controller is subclassing. All of the functionality required to 
 display and edit sections and rows is built into `EXTableViewController`. Therefore, simply create a new 
 subclass of `EXTableViewController`.
@@ -91,3 +93,39 @@ override func generateSections() -> [Section] {
 5. Notice how you are able to append any type of row. Here, I added another type of row, `StringRow`, with no extra overhead.
 
 Now run the project, and you have a fully functioning extended table view controller. Yay!
+
+
+### Responding to User Interraction
+
+The traditional method of responding to user interraction is still valid. However, it has been optimized to be able to also be declarative. For instance, instead of having to use `tableView(_:didSelectRowAt:)`, you can simply tell the row what to do when tapped using `someRow.onDidSelect = ...`. However, this only works on rows that conform to `RowResponder` in `EXTableViewController`.
+
+This happens because `ExtendedTableViewController` checks for an instance of `RowResponder` for each of the observable events. Therefore, overriding any of the following table view methods in subclasses should call the  `super` implementation as well.
+
+`UITableViewDelegate` Method | `RowResponder` Equivalent
+------------------------------------- | -------------------------------
+`tableView(_:willDisplay:forRowAt:)` | `onWillDisplay`
+`tableView(_:didEndDisplaying:forRowAt:` | `onDidDisplay`
+`tableView(_:willSelectRowAt:)` | `onWillSelect`
+`tableView(_:didSelectRowAt:)` | `onDidSelect`
+`tableView(_:willDeselectRowAt:)` | `onWillDeselect`
+`tableView(_:didDeselectRowAt:)` | `onDidDeselect`
+
+```swift
+struct IntRow: Row, RowResponder {
+    ...
+    
+    var onWillSelect: ((IndexPath) -> (IndexPath))?
+    var onDidSelect: ((IndexPath) -> ())?
+    var onWillDeselect: ((IndexPath) -> (IndexPath))?
+    var onDidDeselect: ((IndexPath) -> ())?
+    var onWillDisplay: ((IndexPath) -> ())?
+    var onDidDisplay: ((IndexPath) -> ())?
+}
+```
+
+```swift
+let row = IntRow(data: 500)
+row.onDidSelect = { _ in
+    print("Just tapped 500!")
+}
+```

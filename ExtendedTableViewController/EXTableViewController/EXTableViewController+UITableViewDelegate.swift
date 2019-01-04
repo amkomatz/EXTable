@@ -13,42 +13,42 @@ extension EXTableViewController {
     open override func tableView(
         _ tableView: UITableView,
         titleForHeaderInSection section: Int
-        ) -> String? {
+    ) -> String? {
         return sections[section].headerTitle
     }
     
     open override func tableView(
         _ tableView: UITableView,
         titleForFooterInSection section: Int
-        ) -> String? {
+    ) -> String? {
         return sections[section].footerTitle
     }
     
     open override func tableView(
         _ tableView: UITableView,
         heightForHeaderInSection section: Int
-        ) -> CGFloat {
+    ) -> CGFloat {
         return sections[section].headerHeight
     }
     
     open override func tableView(
         _ tableView: UITableView,
         heightForFooterInSection section: Int
-        ) -> CGFloat {
+    ) -> CGFloat {
         return sections[section].footerHeight
     }
     
     open override func tableView(
         _ tableView: UITableView,
         viewForHeaderInSection section: Int
-        ) -> UIView? {
+    ) -> UIView? {
         return sections[section].headerView
     }
     
     open override func tableView(
         _ tableView: UITableView,
         viewForFooterInSection section: Int
-        ) -> UIView? {
+    ) -> UIView? {
         return sections[section].footerView
     }
     
@@ -56,7 +56,7 @@ extension EXTableViewController {
         _ tableView: UITableView,
         willDisplay cell: UITableViewCell,
         forRowAt indexPath: IndexPath
-        ) {
+    ) {
         if let responder = responder(at: indexPath) {
             responder.onWillDisplay?(indexPath)
         }
@@ -66,7 +66,7 @@ extension EXTableViewController {
         _ tableView: UITableView,
         didEndDisplaying cell: UITableViewCell,
         forRowAt indexPath: IndexPath
-        ) {
+    ) {
         if let responder = responder(at: indexPath) {
             responder.onDidDisplay?(indexPath)
         }
@@ -75,7 +75,7 @@ extension EXTableViewController {
     open override func tableView(
         _ tableView: UITableView,
         willSelectRowAt indexPath: IndexPath
-        ) -> IndexPath? {
+    ) -> IndexPath? {
         if let responder = responder(at: indexPath) {
             return responder.onWillSelect?(indexPath) ?? indexPath
         }
@@ -86,7 +86,7 @@ extension EXTableViewController {
     open override func tableView(
         _ tableView: UITableView,
         didSelectRowAt indexPath: IndexPath
-        ) {
+    ) {
         if let responder = responder(at: indexPath) {
             responder.onDidSelect?(indexPath)
         }
@@ -95,7 +95,7 @@ extension EXTableViewController {
     open override func tableView(
         _ tableView: UITableView,
         willDeselectRowAt indexPath: IndexPath
-        ) -> IndexPath? {
+    ) -> IndexPath? {
         if let responder = responder(at: indexPath) {
             return responder.onWillDeselect?(indexPath) ?? indexPath
         }
@@ -106,7 +106,7 @@ extension EXTableViewController {
     open override func tableView(
         _ tableView: UITableView,
         didDeselectRowAt indexPath: IndexPath
-        ) {
+    ) {
         if let responder = responder(at: indexPath) {
             responder.onDidDeselect?(indexPath)
         }
