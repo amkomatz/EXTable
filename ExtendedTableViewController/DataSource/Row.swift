@@ -29,13 +29,26 @@ public protocol Row: Equatable {
     
 }
 
+public protocol RowResponder {
+    
+    var onWillSelect: ((IndexPath) -> (IndexPath))? { get set }
+    var onDidSelect: ((IndexPath) -> ())? { get set }
+    
+    var onWillDeselect: ((IndexPath) -> (IndexPath))? { get set }
+    var onDidDeselect: ((IndexPath) -> ())? { get set }
+    
+    var onWillDisplay: ((IndexPath) -> ())? { get set }
+    var onDidDisplay: ((IndexPath) -> ())? { get set }
+    
+}
+
 public extension Row {
     
     public func configuredCell(for tableView: UITableView, at indexPath: IndexPath) -> CellType {
         let cell = tableView.dequeueReusableCell(
             withIdentifier: CellType.self.reuseIdentifier,
             for: indexPath
-        ) as! CellType
+            ) as! CellType
         
         cell.configure(for: data)
         return cell
