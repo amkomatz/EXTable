@@ -10,14 +10,6 @@ import UIKit
 
 class ViewController: EXTableViewController {
     
-    override var cellClasses: [(UITableViewCell & CellLoadable).Type] {
-        return [
-            IntTableViewCell.self,
-            StringTableViewCell.self,
-            SwitchTableViewCell.self,
-        ]
-    }
-    
     override func generateSections() -> [Section] {
         var sections: [Section] = []
         

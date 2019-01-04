@@ -11,6 +11,7 @@ import UIKit
 internal protocol _AnyRowBox {
     
     var _base: Any { get }
+    var _cellClass: (UITableViewCell & CellLoadable).Type { get }
     
     func _unbox<T: Row>() -> T?
     func _isEqual(to rhs: _AnyRowBox) -> Bool
@@ -22,6 +23,9 @@ internal protocol _AnyRowBox {
 internal struct _ConcreteRowBox<Base: Row>: _AnyRowBox {
     
     internal var _baseRow: Base
+    internal var _cellClass: (UITableViewCell & CellLoadable).Type {
+        return Base.CellType.self
+    }
     
     var _base: Any {
         return _baseRow
@@ -65,6 +69,10 @@ public struct AnyRow {
     
     public var base: Any {
         return _box._base
+    }
+    
+    public var cellClass: (UITableViewCell & CellLoadable).Type {
+        return _box._cellClass
     }
     
     public func configuredCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell? {

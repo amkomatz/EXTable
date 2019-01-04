@@ -17,11 +17,11 @@ import UIKit
 /// view.
 ///
 /// It is also important to note that this class is not meant to be used as-is, and should be
-/// subclassed. When subclassing, the only members that need to be overridden are `cellClasses`,
-/// and `generateSections`. The `cellClasses` property should contain all of the cells that will be
-/// used. Registration happens automatically by this class in `viewDidLoad`. `generateSections`
-/// should return all of the data to be displayed.
-open class EXTableViewController: UITableViewController, CellRegistrable, Refreshable {
+/// subclassed. When subclassing, the only member that needs to be overridden is `generateSections`.
+/// The `cellClasses` property should contain all of the cells that will be used. Registration
+/// of cells happens automaticelly. `generateSections` should return all of the data to be
+/// displayed.
+open class EXTableViewController: UITableViewController, Refreshable {
     
     /// The sections and rows to be displayed in the table view.
     ///
@@ -31,6 +31,8 @@ open class EXTableViewController: UITableViewController, CellRegistrable, Refres
             onSectionUpdate()
         }
     }
+    
+    public internal(set) var registeredCells: Set<String> = []
     
     public var isRefreshingEnabled: Bool = false {
         didSet {
@@ -42,24 +44,9 @@ open class EXTableViewController: UITableViewController, CellRegistrable, Refres
         }
     }
     
-    /// The cell classes that should be registered.
-    ///
-    /// This property should be overridden by any subclasses, and should return all of the cells
-    /// that can be used by the table view.
-    open var cellClasses: [(UITableViewCell & CellLoadable).Type] {
-        return []
-    }
-    
     open override func viewDidLoad() {
         super.viewDidLoad()
-        registerCells()
         refreshSections()
-    }
-    
-    open func registerCells() {
-        for cellClass in cellClasses {
-            tableView.register(cellClass)
-        }
     }
     
     /// Generates and returns the sections for the table view.
