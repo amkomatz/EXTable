@@ -21,9 +21,23 @@ import UIKit
 /// and `generateSections`. The `cellClasses` property should contain all of the cells that will be
 /// used. Registration happens automatically by this class in `viewDidLoad`. `generateSections`
 /// should return all of the data to be displayed.
-open class EXTableViewController: UITableViewController, CellRegistrable {
+open class EXTableViewController: UITableViewController, CellRegistrable, Refreshable {
     
-    public var sections: [Section] = []
+    public private(set) var sections: [Section] = [] {
+        didSet {
+            onSectionUpdate()
+        }
+    }
+    
+    public var isRefreshingEnabled: Bool = false {
+        didSet {
+            if isRefreshingEnabled {
+                setupRefresher()
+            } else {
+                refresher.removeFromSuperview()
+            }
+        }
+    }
     
     /// The cell classes that should be registered.
     ///
@@ -39,6 +53,12 @@ open class EXTableViewController: UITableViewController, CellRegistrable {
         refreshSections()
     }
     
+    open func registerCells() {
+        for cellClass in cellClasses {
+            tableView.register(cellClass)
+        }
+    }
+    
     /// Generates and returns the sections for the table view.
     ///
     /// This method must be overridden for any subclasses. Otherwise, the table view will remain
@@ -52,6 +72,11 @@ open class EXTableViewController: UITableViewController, CellRegistrable {
         sections = generateSections()
         tableView.reloadData()
     }
+    
+    
+    // MARK: - Observer Methods
+    
+    open func onSectionUpdate() {}
     
     
     // MARK: - Index Path Operations
@@ -101,7 +126,7 @@ open class EXTableViewController: UITableViewController, CellRegistrable {
         _ row: T,
         at indexPath: IndexPath,
         animation: UITableView.RowAnimation = .top
-    ) {
+        ) {
         sections[indexPath.section].insertRow(row, at: indexPath.row)
         tableView.insertRows(at: [indexPath], with: animation)
     }
@@ -116,7 +141,7 @@ open class EXTableViewController: UITableViewController, CellRegistrable {
         _ row: T,
         to section: Int,
         animation: UITableView.RowAnimation = .top
-    ) {
+        ) {
         let indexPath = IndexPath(row: sections[section].rowCount, section: section)
         insertRow(row, at: indexPath, animation: animation)
     }
@@ -131,7 +156,7 @@ open class EXTableViewController: UITableViewController, CellRegistrable {
         _ row: T,
         in section: Int,
         animation: UITableView.RowAnimation = .bottom
-    ) {
+        ) {
         let indexPath = IndexPath(row: 0, section: section)
         insertRow(row, at: indexPath, animation: animation)
     }
@@ -255,7 +280,7 @@ open class EXTableViewController: UITableViewController, CellRegistrable {
     open func moveSection(at index: Int, to newIndex: Int) {
         let temp = sections.remove(at: index)
         sections.insert(temp, at: newIndex)
-            
+        
         tableView.moveSection(index, toSection: newIndex)
     }
     
@@ -269,9 +294,15 @@ open class EXTableViewController: UITableViewController, CellRegistrable {
         _ section: Section,
         at index: Int,
         animation: UITableView.RowAnimation = .top
-    ) {
+        ) {
         sections.insert(section, at: index)
         tableView.insertSections(IndexSet(integer: index), with: animation)
     }
+    
+    
+    // MARK: - Refreshable
+    
+    public lazy var refresher = UIRefreshControl()
+    open func refresh() {}
     
 }
