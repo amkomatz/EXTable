@@ -23,6 +23,9 @@ import UIKit
 /// should return all of the data to be displayed.
 open class EXTableViewController: UITableViewController, CellRegistrable, Refreshable {
     
+    /// The sections and rows to be displayed in the table view.
+    ///
+    /// - Important: Whenever this variable is updated, `onSectionUpdate()` is called.
     public private(set) var sections: [Section] = [] {
         didSet {
             onSectionUpdate()
@@ -76,6 +79,7 @@ open class EXTableViewController: UITableViewController, CellRegistrable, Refres
     
     // MARK: - Observer Methods
     
+    /// Called whenever the sections update.
     open func onSectionUpdate() {}
     
     

@@ -23,16 +23,16 @@ class ViewController: EXTableViewController {
         
         var section1 = Section()
         section1.headerTitle = "Section 1"
-        section1.addRow(IntRow(data: 1))
-        section1.addRow(StringRow(data: "Awesome"))
-        section1.addRow(IntRow(data: 22))
+        section1.appendRow(IntRow(data: 1))
+        section1.appendRow(StringRow(data: "Awesome"))
+        section1.appendRow(IntRow(data: 22))
         sections.append(section1)
         
         var section2 = Section()
         section2.headerTitle = "Section 2"
-        section2.addRow(IntRow(data: 13))
-        section2.addRow(StringRow(data: "So cool"))
-        section2.addRow(StringRow(data: "Heck yeah"))
+        section2.appendRow(IntRow(data: 13))
+        section2.appendRow(StringRow(data: "So cool"))
+        section2.appendRow(StringRow(data: "Heck yeah"))
         sections.append(section2)
         
         var section3 = Section()
@@ -40,7 +40,7 @@ class ViewController: EXTableViewController {
             title: "Switch Me!",
             switchIsOn: false,
             onSwitchValueChange: switchDidChangeValue)
-        section3.addRow(SwitchRow(data: switchDetail))
+        section3.appendRow(SwitchRow(data: switchDetail))
         sections.append(section3)
         
         return sections
