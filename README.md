@@ -129,3 +129,32 @@ row.onDidSelect = { _ in
     print("Just tapped 500!")
 }
 ```
+
+### Extra Cell Configuration
+
+Sometimes it may be required to do extra customization on a cell after it's initial configuration has been completed. This can be done by conforming your row to `ConfigurableRow`, rather than `Row`:
+
+```swift
+struct IntRow: ConfigurableRow {
+    ...
+    
+    var configuration: ((IntTableViewCell) -> ())?
+}
+```
+
+Now, during configuration, the cell will automatically be passed into `configuration`. By setting `configuration` during section generation, the cell can be customized:
+
+```swift
+override func generateSections() -> [Section] {
+    ...
+    
+    let row = IntRow(data: 13)
+    row.configuration = { cell in
+        cell.textLabel?.textColor = .red
+    }
+    
+    ...
+}
+```
+
+Though this functionality is available, it is recommended to only do this in situations that demand it. Displaying the data should be handled in the table view cell.

@@ -42,15 +42,37 @@ public protocol RowResponder {
     
 }
 
+public protocol ConfigurableRow: Row {
+    
+    var configuration: ((CellType) -> ())? { get set }
+    
+}
+
 public extension Row {
     
     public func configuredCell(for tableView: UITableView, at indexPath: IndexPath) -> CellType {
         let cell = tableView.dequeueReusableCell(
             withIdentifier: CellType.self.reuseIdentifier,
             for: indexPath
-            ) as! CellType
+        ) as! CellType
         
         cell.configure(for: data)
+        return cell
+    }
+    
+}
+
+public extension ConfigurableRow {
+    
+    public func configuredCell(for tableView: UITableView, at indexPath: IndexPath) -> CellType {
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: CellType.self.reuseIdentifier,
+            for: indexPath
+        ) as! CellType
+        
+        cell.configure(for: data)
+        configuration?(cell)
+        
         return cell
     }
     

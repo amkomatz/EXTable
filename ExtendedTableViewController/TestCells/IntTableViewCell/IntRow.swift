@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct IntRow: Row, RowResponder {
+struct IntRow: ConfigurableRow, RowResponder {
     
     static func == (lhs: IntRow, rhs: IntRow) -> Bool {
         return lhs.data == rhs.data
@@ -18,6 +18,7 @@ struct IntRow: Row, RowResponder {
     typealias CellType = IntTableViewCell
     
     var data: Int
+    var configuration: ((IntTableViewCell) -> ())?
     
     init(data: Int) {
         self.data = data

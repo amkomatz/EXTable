@@ -25,15 +25,17 @@ extension EXTableViewController {
         _ tableView: UITableView,
         cellForRowAt indexPath: IndexPath
     ) -> UITableViewCell {
+        let row = sections[indexPath.section].rows[indexPath.row]
+        
         // Register the cell, if needed.
-        let cellClass = sections[indexPath.section].rows[indexPath.row].cellClass
+        let cellClass = row.cellClass
         let cellClassName = String(describing: cellClass)
         if registeredCells.contains(cellClassName) == false {
             tableView.register(cellClass.self)
             registeredCells.insert(cellClassName)
         }
         
-        return sections[indexPath.section].cellForRow(at: indexPath, in: tableView)
+        return row.configuredCell(for: tableView, at: indexPath)!
     }
     
 }

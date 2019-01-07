@@ -22,7 +22,11 @@ class ViewController: EXTableViewController {
         
         var section2 = Section()
         section2.headerTitle = "Section 2"
-        section2.appendRow(IntRow(data: 13))
+        var thirteen = IntRow(data: 13)
+        thirteen.configuration = { cell in
+            cell.textLabel?.textColor = .red
+        }
+        section2.appendRow(thirteen)
         section2.appendRow(StringRow(data: "So cool"))
         section2.appendRow(StringRow(data: "Heck yeah"))
         sections.append(section2)
