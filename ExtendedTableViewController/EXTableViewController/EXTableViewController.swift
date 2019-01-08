@@ -254,6 +254,13 @@ open class EXTableViewController: UITableViewController, Refreshable {
         })
     }
     
+    /// Replaces the row at an index path with a new row.
+    ///
+    /// - Parameters:
+    ///   - indexPath: The index path of the row to be replaced.
+    ///   - newRow: The row to replace the current row with.
+    ///   - outAnimation: The animation to be used when removing the current row.
+    ///   - inAnimation: The animation to be used when inserting the new row.
     open func replaceRow<T: Row>(
         at indexPath: IndexPath,
         with newRow: T,
@@ -301,7 +308,7 @@ open class EXTableViewController: UITableViewController, Refreshable {
         _ section: Section,
         at index: Int,
         animation: UITableView.RowAnimation = .top
-        ) {
+    ) {
         sections.insert(section, at: index)
         tableView.insertSections(IndexSet(integer: index), with: animation)
     }
