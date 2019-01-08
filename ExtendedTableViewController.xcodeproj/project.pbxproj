@@ -33,6 +33,7 @@
 		4202FAC921B86F6000735811 /* Row.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4202FAB421B86F6000735811 /* Row.swift */; };
 		4202FACB21B86FBF00735811 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4202FACA21B86FBF00735811 /* Main.storyboard */; };
 		429157AE21DFA4A900CE4C05 /* Refreshable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 429157AD21DFA4A900CE4C05 /* Refreshable.swift */; };
+		42B4D34221E5128E008F14AE /* UIShadowFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B4D34121E5128E008F14AE /* UIShadowFooterView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +65,7 @@
 		4202FAB421B86F6000735811 /* Row.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Row.swift; sourceTree = "<group>"; };
 		4202FACA21B86FBF00735811 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		429157AD21DFA4A900CE4C05 /* Refreshable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Refreshable.swift; sourceTree = "<group>"; };
+		42B4D34121E5128E008F14AE /* UIShadowFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIShadowFooterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 				4202FA9E21B86F6000735811 /* EXTableViewController */,
 				4202FAB221B86F6000735811 /* DataSource */,
 				4202FAA321B86F6000735811 /* ViewController.swift */,
+				42B4D34121E5128E008F14AE /* UIShadowFooterView.swift */,
 				4202FA8521B86F2500735811 /* AppDelegate.swift */,
 				4202FACA21B86FBF00735811 /* Main.storyboard */,
 				4202FA8C21B86F2600735811 /* Assets.xcassets */,
@@ -273,6 +276,7 @@
 				4202FABB21B86F6000735811 /* EXTableViewController.swift in Sources */,
 				4202FAB721B86F6000735811 /* CellLoadable.swift in Sources */,
 				4202FAB521B86F6000735811 /* Section.swift in Sources */,
+				42B4D34221E5128E008F14AE /* UIShadowFooterView.swift in Sources */,
 				4202FABC21B86F6000735811 /* EXTableViewController+UITableViewDelegate.swift in Sources */,
 				4202FAC721B86F6000735811 /* IntTableViewCell.swift in Sources */,
 				4202FAB621B86F6000735811 /* UITableView+CellRegistration.swift in Sources */,

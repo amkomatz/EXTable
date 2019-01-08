@@ -33,6 +33,14 @@ open class EXTableViewController: UITableViewController, Refreshable {
     }
     
     public internal(set) var registeredCells: Set<String> = []
+    public internal(set) var registeredHeaderFooterViews: Set<String> = []
+    
+    /// The header view class that should be used if there isn't one in a section.
+    public private(set) var defaultHeaderViewClass: (UITableViewHeaderFooterView & Reusable).Type? = nil
+    public private(set) var defaultHeaderViewHeight: CGFloat? = nil
+    /// The footer view class that should be used if there isn't one in a section.
+    public private(set) var defaultFooterViewClass: (UITableViewHeaderFooterView & Reusable).Type? = nil
+    public private(set) var defaultFooterViewHeight: CGFloat? = nil
     
     public var isRefreshingEnabled: Bool = false {
         didSet {
@@ -61,6 +69,44 @@ open class EXTableViewController: UITableViewController, Refreshable {
     open func refreshSections() {
         sections = generateSections()
         tableView.reloadData()
+    }
+    
+    /// Sets the default header view class to be used when one isn't provided by a section.
+    ///
+    /// - Parameters:
+    ///   - headerClass: The default header class to be used.
+    ///   - height: The default height for the header view.
+    public final func setDefaultHeader(
+        _ headerClass: (UITableViewHeaderFooterView & Reusable).Type,
+        height: CGFloat = UITableView.automaticDimension
+    ) {
+        registerHeaderFooterClassIfNeeded(headerClass)
+        defaultHeaderViewClass = headerClass
+        defaultHeaderViewHeight = height
+    }
+    
+    /// Sets the default footer view class to be used when one isn't provided by a section.
+    ///
+    /// - Parameters:
+    ///   - footerClass: The default footer class to be used.
+    ///   - height: The default height for the footer view.
+    public final func setDefaultFooter(
+        _ footerClass: (UITableViewHeaderFooterView & Reusable).Type,
+        height: CGFloat = UITableView.automaticDimension
+    ) {
+        registerHeaderFooterClassIfNeeded(footerClass)
+        defaultFooterViewClass = footerClass
+        defaultFooterViewHeight = height
+    }
+    
+    public func registerHeaderFooterClassIfNeeded(
+        _ headerFooterClass: (UITableViewHeaderFooterView & Reusable).Type
+    ) {
+        let className = String(describing: headerFooterClass)
+        if registeredHeaderFooterViews.contains(className) == false {
+            tableView.register(headerFooterClass)
+            registeredHeaderFooterViews.insert(className)
+        }
     }
     
     
@@ -163,7 +209,7 @@ open class EXTableViewController: UITableViewController, Refreshable {
     open func removeRow(
         at indexPath: IndexPath,
         animation: UITableView.RowAnimation = .left,
-        removeSectionIfEmpty: Bool = false
+        removeSectionIfEmpty: Bool = true
     ) {
         tableView.performBatchUpdates({
             // Remove the row.

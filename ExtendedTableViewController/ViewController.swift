@@ -10,6 +10,12 @@ import UIKit
 
 class ViewController: EXTableViewController {
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setDefaultFooter(UIShadowFooterView.self, height: 5)
+    }
+    
     override func generateSections() -> [Section] {
         var sections: [Section] = []
         
