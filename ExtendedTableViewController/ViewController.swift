@@ -55,7 +55,7 @@ class ViewController: EXTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        removeRow(at: indexPath)
+//        removeRow(at: indexPath)
 //        appendRow(IntRow(data: 10), to: indexPath.section)
 //        insertRow(IntRow(data: 10), at: indexPath)
 //        prependRow(IntRow(data: 10), in: indexPath.section)
@@ -68,6 +68,8 @@ class ViewController: EXTableViewController {
 //        section.addRow(IntRow(data: 200))
 //        section.addRow(IntRow(data: 300))
 //        insertSection(section, at: 0)
+        
+        replaceRow(at: indexPath, with: IntRow(data: Int(arc4random())), outAnimation: .left, inAnimation: .right)
     }
     
 }

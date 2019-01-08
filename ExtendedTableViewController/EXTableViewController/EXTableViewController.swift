@@ -117,7 +117,7 @@ open class EXTableViewController: UITableViewController, Refreshable {
         _ row: T,
         at indexPath: IndexPath,
         animation: UITableView.RowAnimation = .top
-        ) {
+    ) {
         sections[indexPath.section].insertRow(row, at: indexPath.row)
         tableView.insertRows(at: [indexPath], with: animation)
     }
@@ -132,7 +132,7 @@ open class EXTableViewController: UITableViewController, Refreshable {
         _ row: T,
         to section: Int,
         animation: UITableView.RowAnimation = .top
-        ) {
+    ) {
         let indexPath = IndexPath(row: sections[section].rowCount, section: section)
         insertRow(row, at: indexPath, animation: animation)
     }
@@ -147,7 +147,7 @@ open class EXTableViewController: UITableViewController, Refreshable {
         _ row: T,
         in section: Int,
         animation: UITableView.RowAnimation = .bottom
-        ) {
+    ) {
         let indexPath = IndexPath(row: 0, section: section)
         insertRow(row, at: indexPath, animation: animation)
     }
@@ -160,14 +160,18 @@ open class EXTableViewController: UITableViewController, Refreshable {
     /// - Parameters:
     ///   - indexPath: The index path of the row to be removed.
     ///   - animation: The animation that should be used to remove the row.
-    open func removeRow(at indexPath: IndexPath, animation: UITableView.RowAnimation = .left) {
+    open func removeRow(
+        at indexPath: IndexPath,
+        animation: UITableView.RowAnimation = .left,
+        removeSectionIfEmpty: Bool = false
+    ) {
         tableView.performBatchUpdates({
             // Remove the row.
             sections[indexPath.section].removeRow(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: animation)
             
             // Remove the section, if needed.
-            if sections[indexPath.section].rowCount == 0 {
+            if sections[indexPath.section].rowCount == 0 && removeSectionIfEmpty {
                 removeSection(at: indexPath.section)
             }
         })
@@ -247,6 +251,18 @@ open class EXTableViewController: UITableViewController, Refreshable {
             }
             
             tableView.moveRow(at: indexPath, to: newIndexPath)
+        })
+    }
+    
+    open func replaceRow<T: Row>(
+        at indexPath: IndexPath,
+        with newRow: T,
+        outAnimation: UITableView.RowAnimation = .top,
+        inAnimation: UITableView.RowAnimation = .top
+    ) {
+        tableView.performBatchUpdates({
+            removeRow(at: indexPath, animation: outAnimation, removeSectionIfEmpty: false)
+            insertRow(newRow, at: indexPath, animation: inAnimation)
         })
     }
     
