@@ -121,18 +121,8 @@ extension EXTableViewController {
         willDisplay cell: UITableViewCell,
         forRowAt indexPath: IndexPath
     ) {
-        if let responder = responder(at: indexPath) {
+        if let responder = item(at: indexPath).base as? WillDisplayResponder {
             responder.onWillDisplay?(indexPath)
-        }
-    }
-    
-    open override func tableView(
-        _ tableView: UITableView,
-        didEndDisplaying cell: UITableViewCell,
-        forRowAt indexPath: IndexPath
-    ) {
-        if let responder = responder(at: indexPath) {
-            responder.onDidDisplay?(indexPath)
         }
     }
     
@@ -140,7 +130,7 @@ extension EXTableViewController {
         _ tableView: UITableView,
         willSelectRowAt indexPath: IndexPath
     ) -> IndexPath? {
-        if let responder = responder(at: indexPath) {
+        if let responder = item(at: indexPath).base as? WillSelectResponder {
             return responder.onWillSelect?(indexPath) ?? indexPath
         }
         
@@ -151,7 +141,7 @@ extension EXTableViewController {
         _ tableView: UITableView,
         didSelectRowAt indexPath: IndexPath
     ) {
-        if let responder = responder(at: indexPath) {
+        if let responder = item(at: indexPath).base as? DidSelectResponder {
             responder.onDidSelect?(indexPath)
         }
     }
@@ -160,7 +150,7 @@ extension EXTableViewController {
         _ tableView: UITableView,
         willDeselectRowAt indexPath: IndexPath
     ) -> IndexPath? {
-        if let responder = responder(at: indexPath) {
+        if let responder = item(at: indexPath).base as? WillDeselectResponder {
             return responder.onWillDeselect?(indexPath) ?? indexPath
         }
         
@@ -171,13 +161,9 @@ extension EXTableViewController {
         _ tableView: UITableView,
         didDeselectRowAt indexPath: IndexPath
     ) {
-        if let responder = responder(at: indexPath) {
+        if let responder = item(at: indexPath).base as? DidDeselectResponder {
             responder.onDidDeselect?(indexPath)
         }
-    }
-    
-    private func responder(at indexPath: IndexPath) -> RowResponder? {
-        return item(at: indexPath).base as? RowResponder
     }
     
 }

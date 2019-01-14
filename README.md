@@ -97,21 +97,20 @@ Now run the project, and you have a fully functioning extended table view contro
 
 ### Responding to User Interraction
 
-The traditional method of responding to user interraction is still valid. However, it has been optimized to be able to also be declarative. For instance, instead of having to use `tableView(_:didSelectRowAt:)`, you can simply tell the row what to do when tapped using `someRow.onDidSelect = ...`. However, this only works on rows that conform to `RowResponder` in `EXTableViewController`.
+The traditional method of responding to user interraction is still valid. However, it has been optimized to be able to also be declarative. For instance, instead of having to use `tableView(_:didSelectRowAt:)`, you can simply tell the row what to do when tapped using `someRow.onDidSelect = ...`. However, this only works on rows that conform to responder protocols in `EXTableViewController`. This happens because `ExtendedTableViewController` checks for responders during each of the observable events. 
 
-This happens because `ExtendedTableViewController` checks for an instance of `RowResponder` for each of the observable events. Therefore, overriding any of the following table view methods in subclasses should call the  `super` implementation as well.
-
-`UITableViewDelegate` Method | `RowResponder` Equivalent
+`UITableViewDelegate` Method | Responder Equivalent
 ------------------------------------- | -------------------------------
-`tableView(_:willDisplay:forRowAt:)` | `onWillDisplay`
-`tableView(_:didEndDisplaying:forRowAt:` | `onDidDisplay`
-`tableView(_:willSelectRowAt:)` | `onWillSelect`
-`tableView(_:didSelectRowAt:)` | `onDidSelect`
-`tableView(_:willDeselectRowAt:)` | `onWillDeselect`
-`tableView(_:didDeselectRowAt:)` | `onDidDeselect`
+`tableView(_:willDisplay:forRowAt:)` | `WillDisplayResponder.onWillDisplay`
+`tableView(_:willSelectRowAt:)` | `WillSelectResponder.onWillSelect`
+`tableView(_:didSelectRowAt:)` | `DidSelectResponder.onDidSelect`
+`tableView(_:willDeselectRowAt:)` | `WillDeselectResponder.onWillDeselect`
+`tableView(_:didDeselectRowAt:)` | `DidDeselectResponder.onDidDeselect`
+
+Optionally, you can conform to `FullResponder` to gain access to all methods.
 
 ```swift
-struct IntRow: Row, RowResponder {
+struct IntRow: Row, FullResponder {
     ...
     
     var onWillSelect: ((IndexPath) -> (IndexPath))?
@@ -119,7 +118,6 @@ struct IntRow: Row, RowResponder {
     var onWillDeselect: ((IndexPath) -> (IndexPath))?
     var onDidDeselect: ((IndexPath) -> ())?
     var onWillDisplay: ((IndexPath) -> ())?
-    var onDidDisplay: ((IndexPath) -> ())?
 }
 ```
 
