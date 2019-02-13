@@ -35,7 +35,6 @@
 		42075A002214A1D000C93A0B /* Responders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420759FF2214A1D000C93A0B /* Responders.swift */; };
 		429157AE21DFA4A900CE4C05 /* Refreshable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 429157AD21DFA4A900CE4C05 /* Refreshable.swift */; };
 		42B4D34221E5128E008F14AE /* UIShadowFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B4D34121E5128E008F14AE /* UIShadowFooterView.swift */; };
-		42CBD56B21ED2772005B4415 /* Responders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CBD56A21ED2772005B4415 /* Responders.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,7 +68,6 @@
 		420759FF2214A1D000C93A0B /* Responders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Responders.swift; sourceTree = "<group>"; };
 		429157AD21DFA4A900CE4C05 /* Refreshable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Refreshable.swift; sourceTree = "<group>"; };
 		42B4D34121E5128E008F14AE /* UIShadowFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIShadowFooterView.swift; sourceTree = "<group>"; };
-		42CBD56A21ED2772005B4415 /* Responders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Responders.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,7 +181,6 @@
 		4202FAB221B86F6000735811 /* DataSource */ = {
 			isa = PBXGroup;
 			children = (
-				42CBD56921ED275F005B4415 /* Responders */,
 				4202FA9821B86F6000735811 /* Section.swift */,
 				4202FAB421B86F6000735811 /* Row.swift */,
 				4202FAB321B86F6000735811 /* AnyRow.swift */,
@@ -198,14 +195,6 @@
 				4202FA9A21B86F6000735811 /* UITableView+CellRegistration.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		42CBD56921ED275F005B4415 /* Responders */ = {
-			isa = PBXGroup;
-			children = (
-				42CBD56A21ED2772005B4415 /* Responders.swift */,
-			);
-			path = Responders;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -282,7 +271,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				42CBD56B21ED2772005B4415 /* Responders.swift in Sources */,
 				4202FABD21B86F6000735811 /* ViewController.swift in Sources */,
 				4202FAC021B86F6000735811 /* StringRow.swift in Sources */,
 				4202FAC421B86F6000735811 /* SwitchTableViewCell.swift in Sources */,

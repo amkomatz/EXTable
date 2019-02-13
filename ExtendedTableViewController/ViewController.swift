@@ -12,7 +12,6 @@ class ViewController: EXTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setDefaultFooter(UIShadowFooterView.self, height: 5)
     }
     
