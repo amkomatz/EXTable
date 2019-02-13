@@ -39,6 +39,23 @@ class ViewController: EXTableViewController {
         section3.appendRow(SwitchRow(data: switchDetail))
         sections.append(section3)
         
+        var section4 = Section()
+        var untappableRow = StringRow(data: "I bet you can't tap me")
+        untappableRow.onWillSelect = { indexPath in
+            // Make the next row get tapped.
+            return IndexPath(row: indexPath.row + 1, section: indexPath.section)
+        }
+        section4.appendRow(untappableRow)
+        section4.appendRow(StringRow(data: "I hate being tapped"))
+        var strRow = StringRow(data: "You can tap me, it's ok")
+        strRow.onDidSelect = { indexPath in
+            guard let row = self.item(at: indexPath).as(StringRow.self) else { return }
+            print(row.data)
+            self.alert("There is no escaping")
+        }
+        section4.appendRow(strRow)
+        sections.append(section4)
+        
         return sections
     }
     
@@ -53,23 +70,13 @@ class ViewController: EXTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        super.tableView(tableView, didSelectRowAt: indexPath)
         tableView.deselectRow(at: indexPath, animated: true)
-        
-//        removeRow(at: indexPath)
-//        appendRow(IntRow(data: 10), to: indexPath.section)
-//        insertRow(IntRow(data: 10), at: indexPath)
-//        prependRow(IntRow(data: 10), in: indexPath.section)
-//        remove(firstOccurrenceOf: IntRow(data: 22))
-//        moveRow(at: indexPath, to: IndexPath(row: 0, section: 0))
-//        moveSection(at: indexPath.section, to: 0)
-        
-//        var section = Section()
-//        section.addRow(IntRow(data: 100))
-//        section.addRow(IntRow(data: 200))
-//        section.addRow(IntRow(data: 300))
-//        insertSection(section, at: 0)
-        
-        replaceRow(at: indexPath, with: IntRow(data: Int(arc4random())), outAnimation: .left, inAnimation: .right)
+    }
+    
+    private func alert(_ message: String) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        present(alert, animated: true)
     }
     
 }

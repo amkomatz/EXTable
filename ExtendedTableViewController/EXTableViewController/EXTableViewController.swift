@@ -21,7 +21,7 @@ import UIKit
 /// The `cellClasses` property should contain all of the cells that will be used. Registration
 /// of cells happens automaticelly. `generateSections` should return all of the data to be
 /// displayed.
-open class EXTableViewController: UITableViewController, Refreshable {
+open class EXTableViewController: UITableViewController {
     
     /// The sections and rows to be displayed in the table view.
     ///
@@ -33,16 +33,14 @@ open class EXTableViewController: UITableViewController, Refreshable {
     }
     
     public internal(set) var registeredCells: Set<String> = []
+    public internal(set) var registeredHeaderFooterViews: Set<String> = []
     
-    public var isRefreshingEnabled: Bool = false {
-        didSet {
-            if isRefreshingEnabled {
-                setupRefresher()
-            } else {
-                refresher.removeFromSuperview()
-            }
-        }
-    }
+    /// The header view class that should be used if there isn't one in a section.
+    public private(set) var defaultHeaderViewClass: (UITableViewHeaderFooterView & Reusable).Type?
+    public private(set) var defaultHeaderViewHeight: CGFloat? = nil
+    /// The footer view class that should be used if there isn't one in a section.
+    public private(set) var defaultFooterViewClass: (UITableViewHeaderFooterView & Reusable).Type?
+    public private(set) var defaultFooterViewHeight: CGFloat? = nil
     
     open override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,6 +61,43 @@ open class EXTableViewController: UITableViewController, Refreshable {
         tableView.reloadData()
     }
     
+    /// Sets the default header view class to be used when one isn't provided by a section.
+    ///
+    /// - Parameters:
+    ///   - headerClass: The default header class to be used.
+    ///   - height: The default height for the header view.
+    public final func setDefaultHeader(
+        _ headerClass: (UITableViewHeaderFooterView & Reusable).Type,
+        height: CGFloat = UITableView.automaticDimension
+    ) {
+        registerHeaderFooterClassIfNeeded(headerClass)
+        defaultHeaderViewClass = headerClass
+        defaultHeaderViewHeight = height
+    }
+    
+    /// Sets the default footer view class to be used when one isn't provided by a section.
+    ///
+    /// - Parameters:
+    ///   - footerClass: The default footer class to be used.
+    ///   - height: The default height for the footer view.
+    public final func setDefaultFooter(
+        _ footerClass: (UITableViewHeaderFooterView & Reusable).Type,
+        height: CGFloat = UITableView.automaticDimension
+    ) {
+        registerHeaderFooterClassIfNeeded(footerClass)
+        defaultFooterViewClass = footerClass
+        defaultFooterViewHeight = height
+    }
+    
+    public func registerHeaderFooterClassIfNeeded(
+        _ headerFooterClass: (UITableViewHeaderFooterView & Reusable).Type
+    ) {
+        let className = String(describing: headerFooterClass)
+        if registeredHeaderFooterViews.contains(className) == false {
+            tableView.register(headerFooterClass)
+            registeredHeaderFooterViews.insert(className)
+        }
+    }
     
     // MARK: - Observer Methods
     
@@ -163,7 +198,7 @@ open class EXTableViewController: UITableViewController, Refreshable {
     open func removeRow(
         at indexPath: IndexPath,
         animation: UITableView.RowAnimation = .left,
-        removeSectionIfEmpty: Bool = false
+        removeSectionIfEmpty: Bool = true
     ) {
         tableView.performBatchUpdates({
             // Remove the row.
@@ -254,6 +289,13 @@ open class EXTableViewController: UITableViewController, Refreshable {
         })
     }
     
+    /// Replaces the row at an index path with a new row.
+    ///
+    /// - Parameters:
+    ///   - indexPath: The index path of the row to be replaced.
+    ///   - newRow: The row to replace the current row with.
+    ///   - outAnimation: The animation to be used when removing the current row.
+    ///   - inAnimation: The animation to be used when inserting the new row.
     open func replaceRow<T: Row>(
         at indexPath: IndexPath,
         with newRow: T,
@@ -301,15 +343,9 @@ open class EXTableViewController: UITableViewController, Refreshable {
         _ section: Section,
         at index: Int,
         animation: UITableView.RowAnimation = .top
-        ) {
+    ) {
         sections.insert(section, at: index)
         tableView.insertSections(IndexSet(integer: index), with: animation)
     }
-    
-    
-    // MARK: - Refreshable
-    
-    public lazy var refresher = UIRefreshControl()
-    open func refresh() {}
     
 }

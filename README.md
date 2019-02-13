@@ -97,29 +97,22 @@ Now run the project, and you have a fully functioning extended table view contro
 
 ### Responding to User Interraction
 
-The traditional method of responding to user interraction is still valid. However, it has been optimized to be able to also be declarative. For instance, instead of having to use `tableView(_:didSelectRowAt:)`, you can simply tell the row what to do when tapped using `someRow.onDidSelect = ...`. However, this only works on rows that conform to `RowResponder` in `EXTableViewController`.
+The traditional method of responding to user interraction is still valid. However, it has been optimized to be able to also be declarative. For instance, instead of having to use `tableView(_:didSelectRowAt:)`, you can simply tell the row what to do when tapped using `someRow.onDidSelect = ...`. However, this only works on rows that conform to one of the responder protocols in `EXTableViewController`.
 
-This happens because `ExtendedTableViewController` checks for an instance of `RowResponder` for each of the observable events. Therefore, overriding any of the following table view methods in subclasses should call the  `super` implementation as well.
+This happens because `ExtendedTableViewController` checks if the cell is a responder for each of the observable events. Therefore, overriding any of the following table view methods in subclasses should call the  `super` implementation as well.
 
-`UITableViewDelegate` Method | `RowResponder` Equivalent
+`UITableViewDelegate` Method | Responder Equivalent
 ------------------------------------- | -------------------------------
-`tableView(_:willDisplay:forRowAt:)` | `onWillDisplay`
-`tableView(_:didEndDisplaying:forRowAt:` | `onDidDisplay`
-`tableView(_:willSelectRowAt:)` | `onWillSelect`
-`tableView(_:didSelectRowAt:)` | `onDidSelect`
-`tableView(_:willDeselectRowAt:)` | `onWillDeselect`
-`tableView(_:didDeselectRowAt:)` | `onDidDeselect`
+`tableView(_:willDisplay:forRowAt:)` | `WillDisplayResponder`
+`tableView(_:willSelectRowAt:)` | `WillSelectResponder`
+`tableView(_:didSelectRowAt:)` | `DidSelectResponder`
+`tableView(_:willDeselectRowAt:)` | `WillDeselectResponder`
+`tableView(_:didDeselectRowAt:)` | `DidDeselectResponder`
 
 ```swift
-struct IntRow: Row, RowResponder {
+struct IntRow: Row, DidSelectResponder {
     ...
-    
-    var onWillSelect: ((IndexPath) -> (IndexPath))?
     var onDidSelect: ((IndexPath) -> ())?
-    var onWillDeselect: ((IndexPath) -> (IndexPath))?
-    var onDidDeselect: ((IndexPath) -> ())?
-    var onWillDisplay: ((IndexPath) -> ())?
-    var onDidDisplay: ((IndexPath) -> ())?
 }
 ```
 
@@ -158,3 +151,12 @@ override func generateSections() -> [Section] {
 ```
 
 Though this functionality is available, it is recommended to only do this in situations that demand it. Displaying the data should be handled in the table view cell.
+
+
+### Header and Footer Views
+
+It is also very simple to display header and footer views in `EXTableViewController`, and there are several ways to do so. The following list ranks the precidence of the options:
+
+1. `Section.headerView` or `Section.footerView` - A single view to be displayed as the header/footer.
+2. `Section.reusableHeaderViewClass` or `Section.reusableFooterViewClass` - A reusable header/footer view class.
+3. `EXTableViewController.defaultHeaderViewClass` or `EXTableViewController.defaultFooterViewClass` - The default header/footer to be used in the table view, if one is not provided by the section.

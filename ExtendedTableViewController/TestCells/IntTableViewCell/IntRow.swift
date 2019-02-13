@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct IntRow: ConfigurableRow, RowResponder {
+struct IntRow: ConfigurableRow, FullResponder {
     
     static func == (lhs: IntRow, rhs: IntRow) -> Bool {
         return lhs.data == rhs.data
@@ -29,6 +29,5 @@ struct IntRow: ConfigurableRow, RowResponder {
     var onWillDeselect: ((IndexPath) -> (IndexPath))?
     var onDidDeselect: ((IndexPath) -> ())?
     var onWillDisplay: ((IndexPath) -> ())?
-    var onDidDisplay: ((IndexPath) -> ())?
     
 }

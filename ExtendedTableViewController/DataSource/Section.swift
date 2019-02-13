@@ -16,20 +16,32 @@ import UIKit
 public struct Section {
     
     /// The rows in the section.
-    var rows: [AnyRow] = []
+    public var rows: [AnyRow] = []
     
-    var headerTitle: String? = nil
-    var estimatedHeaderHeight: CGFloat = UITableView.automaticDimension
-    var headerHeight: CGFloat = UITableView.automaticDimension
-    var headerView: UIView? = nil
+    public var headerTitle: String? = nil
+    public var estimatedHeaderHeight: CGFloat = UITableView.automaticDimension
+    public var headerHeight: CGFloat = UITableView.automaticDimension
+    /// The header view to be displayed for the section.
+    public var headerView: UIView? = nil
+    /// The reusable header view to be dequeued if `headerView` is nil.
+    public var reusableHeaderViewClass: (UITableViewHeaderFooterView & Reusable).Type? = nil
     
-    var footerTitle: String? = nil
-    var estimatedFooterHeight: CGFloat = UITableView.automaticDimension
-    var footerHeight: CGFloat = UITableView.automaticDimension
-    var footerView: UIView? = nil
+    public var footerTitle: String? = nil
+    public var estimatedFooterHeight: CGFloat = UITableView.automaticDimension
+    public var footerHeight: CGFloat = UITableView.automaticDimension
+    /// The footer view to be displayed for the section.
+    public var footerView: UIView? = nil
+    /// The reusable footer view to be dequeued if `footerView` is nil.
+    public var reusableFooterViewClass: (UITableViewHeaderFooterView & Reusable).Type? = nil
     
     /// The number of rows in the section.
-    var rowCount: Int { return rows.count }
+    public var rowCount: Int { return rows.count }
+    
+    public init() {}
+    
+    public init(headerTitle: String) {
+        self.headerTitle = headerTitle
+    }
     
     /// Appends a row to the end of the section.
     ///
@@ -73,6 +85,7 @@ public struct Section {
         headerTitle = nil
         headerView = UIView()
         headerHeight = CGFloat.leastNonzeroMagnitude
+        reusableHeaderViewClass = nil
     }
     
     /// Removes the footer from the section.
@@ -80,6 +93,7 @@ public struct Section {
         footerTitle = nil
         footerView = UIView()
         footerHeight = CGFloat.leastNonzeroMagnitude
+        reusableFooterViewClass = nil
     }
     
 }

@@ -29,19 +29,6 @@ public protocol Row: Equatable {
     
 }
 
-public protocol RowResponder {
-    
-    var onWillSelect: ((IndexPath) -> (IndexPath))? { get set }
-    var onDidSelect: ((IndexPath) -> ())? { get set }
-    
-    var onWillDeselect: ((IndexPath) -> (IndexPath))? { get set }
-    var onDidDeselect: ((IndexPath) -> ())? { get set }
-    
-    var onWillDisplay: ((IndexPath) -> ())? { get set }
-    var onDidDisplay: ((IndexPath) -> ())? { get set }
-    
-}
-
 public protocol ConfigurableRow: Row {
     
     var configuration: ((CellType) -> ())? { get set }
