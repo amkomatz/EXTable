@@ -21,7 +21,7 @@ import UIKit
 /// The `cellClasses` property should contain all of the cells that will be used. Registration
 /// of cells happens automaticelly. `generateSections` should return all of the data to be
 /// displayed.
-open class EXTableViewController: UITableViewController, Refreshable {
+open class EXTableViewController: UITableViewController {
     
     /// The sections and rows to be displayed in the table view.
     ///
@@ -36,21 +36,11 @@ open class EXTableViewController: UITableViewController, Refreshable {
     public internal(set) var registeredHeaderFooterViews: Set<String> = []
     
     /// The header view class that should be used if there isn't one in a section.
-    public private(set) var defaultHeaderViewClass: (UITableViewHeaderFooterView & Reusable).Type? = nil
+    public private(set) var defaultHeaderViewClass: (UITableViewHeaderFooterView & Reusable).Type?
     public private(set) var defaultHeaderViewHeight: CGFloat? = nil
     /// The footer view class that should be used if there isn't one in a section.
-    public private(set) var defaultFooterViewClass: (UITableViewHeaderFooterView & Reusable).Type? = nil
+    public private(set) var defaultFooterViewClass: (UITableViewHeaderFooterView & Reusable).Type?
     public private(set) var defaultFooterViewHeight: CGFloat? = nil
-    
-    public var isRefreshingEnabled: Bool = false {
-        didSet {
-            if isRefreshingEnabled {
-                setupRefresher()
-            } else {
-                refresher.removeFromSuperview()
-            }
-        }
-    }
     
     open override func viewDidLoad() {
         super.viewDidLoad()
@@ -358,11 +348,5 @@ open class EXTableViewController: UITableViewController, Refreshable {
         sections.insert(section, at: index)
         tableView.insertSections(IndexSet(integer: index), with: animation)
     }
-    
-    
-    // MARK: - Refreshable
-    
-    public lazy var refresher = UIRefreshControl()
-    open func refresh() {}
     
 }

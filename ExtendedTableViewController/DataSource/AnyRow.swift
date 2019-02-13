@@ -79,6 +79,10 @@ public struct AnyRow {
         return _box.configuredCell(for: tableView, at: indexPath)
     }
     
+    public func `as`<T: Row>(_ type: T.Type) -> T? {
+        return base as? T
+    }
+    
 }
 
 extension AnyRow: Equatable {

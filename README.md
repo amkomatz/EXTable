@@ -110,14 +110,9 @@ The traditional method of responding to user interraction is still valid. Howeve
 Optionally, you can conform to `FullResponder` to gain access to all methods.
 
 ```swift
-struct IntRow: Row, FullResponder {
+struct IntRow: Row, DidSelectResponder {
     ...
-    
-    var onWillSelect: ((IndexPath) -> (IndexPath))?
     var onDidSelect: ((IndexPath) -> ())?
-    var onWillDeselect: ((IndexPath) -> (IndexPath))?
-    var onDidDeselect: ((IndexPath) -> ())?
-    var onWillDisplay: ((IndexPath) -> ())?
 }
 ```
 
@@ -135,7 +130,6 @@ Sometimes it may be required to do extra customization on a cell after it's init
 ```swift
 struct IntRow: ConfigurableRow {
     ...
-    
     var configuration: ((IntTableViewCell) -> ())?
 }
 ```
@@ -150,9 +144,17 @@ override func generateSections() -> [Section] {
     row.configuration = { cell in
         cell.textLabel?.textColor = .red
     }
-    
     ...
 }
 ```
 
 Though this functionality is available, it is recommended to only do this in situations that demand it. Displaying the data should be handled in the table view cell.
+
+
+### Header and Footer Views
+
+It is also very simple to display header and footer views in `EXTableViewController`, and there are several ways to do so. The following list ranks the precidence of the options:
+
+1. `Section.headerView` or `Section.footerView` - A single view to be displayed as the header/footer.
+2. `Section.reusableHeaderViewClass` or `Section.reusableFooterViewClass` - A reusable header/footer view class.
+3. `EXTableViewController.defaultHeaderViewClass` or `EXTableViewController.defaultFooterViewClass` - The default header/footer to be used in the table view, if one is not provided by the section.

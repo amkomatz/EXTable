@@ -21,13 +21,17 @@ public struct Section {
     public var headerTitle: String? = nil
     public var estimatedHeaderHeight: CGFloat = UITableView.automaticDimension
     public var headerHeight: CGFloat = UITableView.automaticDimension
+    /// The header view to be displayed for the section.
     public var headerView: UIView? = nil
+    /// The reusable header view to be dequeued if `headerView` is nil.
     public var reusableHeaderViewClass: (UITableViewHeaderFooterView & Reusable).Type? = nil
     
     public var footerTitle: String? = nil
     public var estimatedFooterHeight: CGFloat = UITableView.automaticDimension
     public var footerHeight: CGFloat = UITableView.automaticDimension
+    /// The footer view to be displayed for the section.
     public var footerView: UIView? = nil
+    /// The reusable footer view to be dequeued if `footerView` is nil.
     public var reusableFooterViewClass: (UITableViewHeaderFooterView & Reusable).Type? = nil
     
     /// The number of rows in the section.
