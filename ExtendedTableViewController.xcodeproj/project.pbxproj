@@ -431,13 +431,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Z2JP2LW642;
+				DEVELOPMENT_TEAM = B6H23DCFAF;
 				INFOPLIST_FILE = ExtendedTableViewController/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.threewingstudios.ExtendedTableViewController;
+				PRODUCT_BUNDLE_IDENTIFIER = com.amkomatz.extableviewcontroller;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -449,13 +449,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Z2JP2LW642;
+				DEVELOPMENT_TEAM = B6H23DCFAF;
 				INFOPLIST_FILE = ExtendedTableViewController/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.threewingstudios.ExtendedTableViewController;
+				PRODUCT_BUNDLE_IDENTIFIER = com.amkomatz.extableviewcontroller;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
