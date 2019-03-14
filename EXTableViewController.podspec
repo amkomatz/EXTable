@@ -2,8 +2,9 @@
 Pod::Spec.new do |spec|
 
   spec.name         = "EXTableViewController"
-  spec.version      = "0.0.3"
-  spec.summary      = "Declarative table view controller."
+  spec.version      = "1.0.0"
+  spec.tag 	    = "1.0.0"
+  spec.summary      = "A declarative table view controller."
   spec.homepage     = "https://github.com/amkomatz/EXTableViewController"
   spec.license      = { :type => "MIT", :file => "LICENSE" }
   spec.author             = "Austin-Michael Komatz"
