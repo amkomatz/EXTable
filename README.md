@@ -1,4 +1,4 @@
-# ExtendedTableViewController
+# EXTable
 
 ## Usage
 
