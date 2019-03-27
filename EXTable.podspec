@@ -2,7 +2,7 @@
 Pod::Spec.new do |spec|
 
   spec.name         = "EXTable"
-  spec.version      = "1.0.5"
+  spec.version      = "1.0.6"
   spec.summary      = "A declarative table view controller."
   spec.homepage     = "https://github.com/amkomatz/EXTable"
   spec.license      = { :type => "MIT", :file => "LICENSE" }
