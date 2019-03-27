@@ -176,6 +176,24 @@ open class EXTableViewController: UITableViewController {
         tableView.insertRows(at: indexPaths, with: animation)
     }
     
+    /// Inserts rows into the data source and table view at an index path.
+    ///
+    /// - Parameters:
+    ///   - row: The rows to be inserted.
+    ///   - indexPath: The index path where the rows should be inserted.
+    ///   - animation: The animation that should be used when inserting the rows.
+    open func insertRows(
+        _ rows: [AnyRow],
+        at indexPath: IndexPath,
+        animation: UITableView.RowAnimation = .top
+    ) {
+        sections[indexPath.section].insertRows(rows, at: indexPath.row)
+        let indexPaths = (0..<rows.count).map { index in
+            IndexPath(row: indexPath.row + index, section: indexPath.section)
+        }
+        tableView.insertRows(at: indexPaths, with: animation)
+    }
+    
     /// Appends a row to the end of a section.
     ///
     /// - Parameters:
@@ -208,12 +226,10 @@ open class EXTableViewController: UITableViewController {
     
     /// Removes the row at a specified index path.
     ///
-    /// When the row is removed, if there are no rows in the section remaining, then the section
-    /// will also be removed.
-    ///
     /// - Parameters:
     ///   - indexPath: The index path of the row to be removed.
     ///   - animation: The animation that should be used to remove the row.
+    ///   - removeSectionIfEmpty: Should the section be removed if it is empty?
     open func removeRow(
         at indexPath: IndexPath,
         animation: UITableView.RowAnimation = .left,
@@ -227,6 +243,37 @@ open class EXTableViewController: UITableViewController {
             // Remove the section, if needed.
             if sections[indexPath.section].rowCount == 0 && removeSectionIfEmpty {
                 removeSection(at: indexPath.section)
+            }
+        })
+    }
+    
+    
+    /// Removes the rows at a specified index paths.
+    ///
+    /// - Parameters:
+    ///   - indexPath: The index path of the row to be removed.
+    ///   - animation: The animation that should be used to remove the row.
+    ///   - removeSectionsIfEmpty: Should the sections be removed if empty?
+    open func removeRows(
+        at indexPaths: [IndexPath],
+        animation: UITableView.RowAnimation = .left,
+        removeSectionsIfEmpty: Bool = true
+    ) {
+        tableView.performBatchUpdates({
+            for indexPath in indexPaths {
+                sections[indexPath.section].removeRow(at: indexPath.row)
+            }
+            tableView.deleteRows(at: indexPaths, with: animation)
+            
+            // Remove the empty sections, if needed.
+            if removeSectionsIfEmpty {
+                let sectionIndices = Set(indexPaths.map({ $0.section }))
+                
+                for sectionIndex in sectionIndices {
+                    if sections[sectionIndex].rowCount == 0 {
+                        removeSection(at: sectionIndex)
+                    }
+                }
             }
         })
     }
