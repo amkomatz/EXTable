@@ -158,6 +158,24 @@ open class EXTableViewController: UITableViewController {
         tableView.insertRows(at: [indexPath], with: animation)
     }
     
+    /// Inserts rows into the data source and table view at an index path.
+    ///
+    /// - Parameters:
+    ///   - row: The rows to be inserted.
+    ///   - indexPath: The index path where the rows should be inserted.
+    ///   - animation: The animation that should be used when inserting the rows.
+    open func insertRows<T: Row>(
+        _ rows: [T],
+        at indexPath: IndexPath,
+        animation: UITableView.RowAnimation = .top
+    ) {
+        sections[indexPath.section].insertRows(rows, at: indexPath.row)
+        let indexPaths = (0..<rows.count).map { index in
+            IndexPath(row: indexPath.row + index, section: indexPath.section)
+        }
+        tableView.insertRows(at: indexPaths, with: animation)
+    }
+    
     /// Appends a row to the end of a section.
     ///
     /// - Parameters:

@@ -68,6 +68,16 @@ public struct Section {
         rows.insert(AnyRow(newRow), at: index)
     }
     
+    /// Inserts new rows into the section at the specified index.
+    ///
+    /// - Parameters:
+    ///   - rows: The rows to be added to the section.
+    ///   - index: The index to insert the rows into.
+    public mutating func insertRows<T: Row>(_ rows: [T], at index: Int) {
+        let rows = rows.map { AnyRow($0) }
+        self.rows.insert(contentsOf: rows, at: index)
+    }
+    
     /// Removes the row at the specified index.
     ///
     /// - Parameter index: The index of the row to be removed.
