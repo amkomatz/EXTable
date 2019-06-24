@@ -15,6 +15,8 @@ import UIKit
 /// until they are used. At this point, they must be casted to the specified type.
 public struct Section {
     
+    public var id: String?
+    
     /// The rows in the section.
     public var rows: [AnyRow] = []
     
@@ -38,6 +40,11 @@ public struct Section {
     public var rowCount: Int { return rows.count }
     
     public init() {}
+    
+    public init(id: String, headerTitle: String? = nil) {
+        self.id = id
+        self.headerTitle = headerTitle
+    }
     
     public init(headerTitle: String) {
         self.headerTitle = headerTitle
