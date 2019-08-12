@@ -64,3 +64,15 @@ public protocol LeadingSwipeActionContaining {
     
     var leadingSwipeActions: [UIContextualAction]? { get set }
 }
+
+
+// MARK: - Accessibility
+
+public protocol AccessibilityContaining {
+    
+    var accessibilityHint: String? { get set }
+    var accessibilityLabel: String? { get set }
+    var accessibilityValue: String? { get set }
+    var accessibilityTraits: UIAccessibilityTraits? { get set }
+    var accessibilityIdentifier: String? { get set }
+}
