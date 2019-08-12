@@ -17,9 +17,11 @@ struct StringRow: Row, FullResponder {
     typealias DataType = String
     typealias CellType = StringTableViewCell
     
+    var id: String?
+    
     var data: String
     
-    init(data: String) {
+    init(id: String?, data: String) {
         self.data = data
     }
     
@@ -28,5 +30,4 @@ struct StringRow: Row, FullResponder {
     var onWillDeselect: ((IndexPath) -> (IndexPath))?
     var onDidDeselect: ((IndexPath) -> ())?
     var onWillDisplay: ((IndexPath) -> ())?
-    
 }

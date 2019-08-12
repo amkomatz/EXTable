@@ -13,14 +13,16 @@ struct SwitchRow: Row {
     typealias DataType = SwitchDetail
     typealias CellType = SwitchTableViewCell
     
+    var id: String?
+    
     var data: SwitchDetail
     
-    init(data: SwitchDetail) {
+    init(id: String?, data: SwitchDetail) {
+        self.id = id
         self.data = data
     }
     
     static func == (lhs: SwitchRow, rhs: SwitchRow) -> Bool {
         return lhs.data === rhs.data
     }
-    
 }

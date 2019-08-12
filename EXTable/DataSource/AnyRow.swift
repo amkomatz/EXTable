@@ -13,11 +13,12 @@ internal protocol _AnyRowBox {
     var _base: Any { get }
     var _cellClass: (UITableViewCell & CellLoadable).Type { get }
     
+    var id: String? { get }
+    
     func _unbox<T: Row>() -> T?
     func _isEqual(to rhs: _AnyRowBox) -> Bool
     
     func configuredCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell?
-    
 }
 
 internal struct _ConcreteRowBox<Base: Row>: _AnyRowBox {
@@ -25,6 +26,10 @@ internal struct _ConcreteRowBox<Base: Row>: _AnyRowBox {
     internal var _baseRow: Base
     internal var _cellClass: (UITableViewCell & CellLoadable).Type {
         return Base.CellType.self
+    }
+    
+    var id: String? {
+        return _baseRow.id
     }
     
     var _base: Any {
@@ -52,7 +57,6 @@ internal struct _ConcreteRowBox<Base: Row>: _AnyRowBox {
         }
         return nil
     }
-    
 }
 
 public struct AnyRow {
@@ -65,6 +69,10 @@ public struct AnyRow {
     
     public init<R: Row>(_ base: R) {
         self.init(_box: _ConcreteRowBox(base))
+    }
+    
+    public var id: String? {
+        return _box.id
     }
     
     public var base: Any {
@@ -82,7 +90,6 @@ public struct AnyRow {
     public func `as`<T: Row>(_ type: T.Type) -> T? {
         return base as? T
     }
-    
 }
 
 extension AnyRow: Equatable {
@@ -90,13 +97,11 @@ extension AnyRow: Equatable {
     public static func == (lhs: AnyRow, rhs: AnyRow) -> Bool {
         return lhs._box._isEqual(to: rhs._box)
     }
-    
 }
 
-public extension Array where Element == AnyRow {
+extension Array where Element == AnyRow {
     
     public mutating func append<T: Row>(_ newElement: T) {
         append(AnyRow(newElement))
     }
-    
 }

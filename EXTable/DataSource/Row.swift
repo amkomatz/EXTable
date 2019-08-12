@@ -12,6 +12,7 @@ import UIKit
 public typealias ConfigurableTableViewCell = UITableViewCell & Configurable & CellLoadable
 
 public protocol Configurable {
+    
     associatedtype DataType: Any
     func configure(for data: DataType)
 }
@@ -21,21 +22,21 @@ public protocol Row: Equatable {
     associatedtype DataType: Any
     associatedtype CellType: ConfigurableTableViewCell where CellType.DataType == DataType
     
+    var id: String? { get set }
+    
     var data: DataType { get set }
     
-    init(data: DataType)
+    init(id: String?, data: DataType)
     
     func configuredCell(for tableView: UITableView, at indexPath: IndexPath) -> CellType
-    
 }
 
 public protocol ConfigurableRow: Row {
     
     var configuration: ((CellType) -> ())? { get set }
-    
 }
 
-public extension Row {
+extension Row {
     
     public func configuredCell(for tableView: UITableView, at indexPath: IndexPath) -> CellType {
         let cell = tableView.dequeueReusableCell(
@@ -46,10 +47,9 @@ public extension Row {
         cell.configure(for: data)
         return cell
     }
-    
 }
 
-public extension ConfigurableRow {
+extension ConfigurableRow {
     
     public func configuredCell(for tableView: UITableView, at indexPath: IndexPath) -> CellType {
         let cell = tableView.dequeueReusableCell(
@@ -62,5 +62,4 @@ public extension ConfigurableRow {
         
         return cell
     }
-    
 }

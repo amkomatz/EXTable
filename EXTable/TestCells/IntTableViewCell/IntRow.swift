@@ -18,10 +18,13 @@ struct IntRow: ConfigurableRow, FullResponder {
     typealias DataType = Int
     typealias CellType = IntTableViewCell
     
+    var id: String?
+    
     var data: Int
     var configuration: ((IntTableViewCell) -> ())?
     
-    init(data: Int) {
+    init(id: String?, data: Int) {
+        self.id = id
         self.data = data
     }
     
@@ -30,5 +33,4 @@ struct IntRow: ConfigurableRow, FullResponder {
     var onWillDeselect: ((IndexPath) -> (IndexPath))?
     var onDidDeselect: ((IndexPath) -> ())?
     var onWillDisplay: ((IndexPath) -> ())?
-    
 }
