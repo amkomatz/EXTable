@@ -166,4 +166,31 @@ extension EXTableViewController {
         }
     }
     
+    open override func tableView(
+        _ tableView: UITableView,
+        trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
+    ) -> UISwipeActionsConfiguration? {
+        guard
+            let container = item(at: indexPath).base as? TrailingSwipeActionContaining,
+            let actions = container.trailingSwipeActions
+        else {
+            return nil
+        }
+        
+        return UISwipeActionsConfiguration(actions: actions)
+    }
+    
+    open override func tableView(
+        _ tableView: UITableView,
+        leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath
+    ) -> UISwipeActionsConfiguration? {
+        guard
+            let container = item(at: indexPath).base as? LeadingSwipeActionContaining,
+            let actions = container.leadingSwipeActions
+        else {
+            return nil
+        }
+        
+        return UISwipeActionsConfiguration(actions: actions)
+    }
 }
