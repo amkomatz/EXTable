@@ -25,12 +25,11 @@ public protocol CellRegistrable: class {
     
 }
 
-public extension CellRegistrable where Self: UITableViewController {
+extension CellRegistrable where Self: UITableViewController {
     
     public func registerCells() {
         for cellClass in cellClasses {
             tableView.register(cellClass)
         }
-    }
-    
+    }    
 }

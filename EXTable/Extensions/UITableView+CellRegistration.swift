@@ -8,7 +8,7 @@
 
 import UIKit
 
-public extension UITableView {
+extension UITableView {
     
     /// Registers a table view cell that conforms to `CellLoadable`.
     public func register(_ cell: CellLoadable.Type) {
@@ -22,5 +22,4 @@ public extension UITableView {
             forHeaderFooterViewReuseIdentifier: headerFooterView.reuseIdentifier
         )
     }
-    
 }
