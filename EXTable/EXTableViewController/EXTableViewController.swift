@@ -384,7 +384,7 @@ open class EXTableViewController: UITableViewController {
     ///   - animation: The animation that should be used to remove the section.
     open func removeSection(at index: Int, animation: UITableView.RowAnimation = .left) {
         sections.remove(at: index)
-        tableView.deleteSections(IndexSet(integer: index), with: .left)
+        tableView.deleteSections(IndexSet(integer: index), with: animation)
     }
     
     /// Moves the section at an index to a new index.
@@ -414,4 +414,22 @@ open class EXTableViewController: UITableViewController {
         tableView.insertSections(IndexSet(integer: index), with: animation)
     }
     
+    /// Replaces the section at the index with a new one.
+    ///
+    /// - Parameters:
+    ///   - index: The index of the section to be replaced.
+    ///   - newSection: The section to be inserted.
+    ///   - outAnimation: The animation to be used when removing the current section.
+    ///   - inAnimation: The animation to be used when inserting the new section.
+    open func replaceSection(
+        at index: Int,
+        with newSection: Section,
+        outAnimation: UITableView.RowAnimation = .top,
+        inAnimation: UITableView.RowAnimation = .top
+    ) {
+        tableView.performBatchUpdates({
+            removeSection(at: index, animation: outAnimation)
+            insertSection(newSection, at: index, animation: inAnimation)
+        })
+    }
 }
