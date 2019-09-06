@@ -55,9 +55,16 @@ open class EXTableViewController: UITableViewController {
         return []
     }
     
+    open func setSections(to sections: [Section]) {
+        self.sections = sections
+    }
+    
     /// Sets the sections and reloads the table view.
     open func refreshSections() {
-        sections = generateSections()
+        let sections = generateSections()
+        
+        setSections(to: sections)
+        
         tableView.reloadData()
     }
     
