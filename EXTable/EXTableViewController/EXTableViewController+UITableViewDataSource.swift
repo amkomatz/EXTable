@@ -37,17 +37,6 @@ extension EXTableViewController {
         
         let cell = row.configuredCell(for: tableView, at: indexPath)!
         
-        if let accessibilityContainer = row.base as? AccessibilityContaining {
-            cell.accessibilityHint = accessibilityContainer.accessibilityHint
-            cell.accessibilityLabel = accessibilityContainer.accessibilityLabel
-            cell.accessibilityValue = accessibilityContainer.accessibilityValue
-            cell.accessibilityIdentifier = accessibilityContainer.accessibilityIdentifier
-            
-            if let accessibilityTraits = accessibilityContainer.accessibilityTraits {
-                cell.accessibilityTraits = accessibilityTraits
-            }
-        }
-        
         return cell
     }
     

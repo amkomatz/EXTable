@@ -44,7 +44,19 @@ extension Row {
             for: indexPath
         ) as! CellType
         
+        if let accessibilityContainer = self as? AccessibilityContaining {
+            cell.accessibilityHint = accessibilityContainer.accessibilityHint
+            cell.accessibilityLabel = accessibilityContainer.accessibilityLabel
+            cell.accessibilityValue = accessibilityContainer.accessibilityValue
+            cell.accessibilityIdentifier = accessibilityContainer.accessibilityIdentifier
+            
+            if let accessibilityTraits = accessibilityContainer.accessibilityTraits {
+                cell.accessibilityTraits = accessibilityTraits
+            }
+        }
+        
         cell.configure(for: data)
+        
         return cell
     }
 }
