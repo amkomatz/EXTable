@@ -39,6 +39,13 @@ extension Row where CellType.DataType == DataType {
     }
 }
 
+extension ConfigurableRow where CellType.DataType == DataType {
+    
+    public var cellData: CellType.DataType {
+        data
+    }
+}
+
 public protocol ConfigurableRow: Row {
     
     var configuration: ((CellType) -> ())? { get set }
