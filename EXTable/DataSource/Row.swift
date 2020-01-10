@@ -20,12 +20,11 @@ public protocol Configurable {
 public protocol Row: Equatable {
     
     associatedtype DataType: Any
-    associatedtype CellType: ConfigurableTableViewCell
+    associatedtype CellType: ConfigurableTableViewCell where CellType.DataType == DataType
     
     var id: String? { get set }
     
     var data: DataType { get set }
-    var cellData: CellType.DataType { get }
     
     init(id: String?, data: DataType)
     
@@ -70,7 +69,7 @@ extension Row {
             }
         }
         
-        cell.configure(for: cellData)
+        cell.configure(for: data)
         
         return cell
     }
@@ -84,7 +83,7 @@ extension ConfigurableRow {
             for: indexPath
         ) as! CellType
         
-        cell.configure(for: cellData)
+        cell.configure(for: data)
         configuration?(cell)
         
         return cell
