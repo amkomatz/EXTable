@@ -21,6 +21,8 @@ struct IntRow: ConfigurableRow, FullResponder {
     var id: String?
     
     var data: Int
+    var cellData: CellType.DataType { data }
+    
     var configuration: ((IntTableViewCell) -> ())?
     
     init(id: String?, data: Int) {

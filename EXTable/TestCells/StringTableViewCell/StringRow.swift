@@ -20,6 +20,7 @@ struct StringRow: Row, FullResponder {
     var id: String?
     
     var data: String
+    var cellData: CellType.DataType { data }
     
     init(id: String?, data: String) {
         self.data = data

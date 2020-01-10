@@ -17,6 +17,8 @@ struct SwitchRow: Row {
     
     var data: SwitchDetail
     
+    var cellData: SwitchDetail { data }
+    
     init(id: String?, data: SwitchDetail) {
         self.id = id
         self.data = data
