@@ -11,6 +11,7 @@ import UIKit
 internal protocol _AnyRowBox {
     
     var _base: Any { get }
+    var _data: Any { get }
     var _cellClass: (UITableViewCell & CellLoadable).Type { get }
     
     var id: String? { get }
@@ -34,6 +35,10 @@ internal struct _ConcreteRowBox<Base: Row>: _AnyRowBox {
     
     var _base: Any {
         return _baseRow
+    }
+    
+    var _data: Any {
+        return _baseRow.data
     }
     
     internal init(_ base: Base) {
@@ -77,6 +82,10 @@ public struct AnyRow {
     
     public var base: Any {
         return _box._base
+    }
+    
+    public var data: Any {
+        return _box._data
     }
     
     public var cellClass: (UITableViewCell & CellLoadable).Type {
